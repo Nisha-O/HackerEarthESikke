@@ -25,9 +25,13 @@ class LoginController < ApplicationController
   end
 
   def signin
-    user = User.find_by_email(params[:user][:email])
+    user = User.find_by_email(params[:user][:email], :conditions=>["is_activated=1"])
+
     pwd_validate = user.authenticate("#{params[:user][:password]}")
     code_validate = user.authenticate_otp("#{params[:authentication_code]}")
+    puts user.inspect
+    puts pwd_validate.to_s
+    puts code_validate.to_s
     if pwd_validate and code_validate
       session[:user_id] = user.id
       redirect_to "/transactions/new"

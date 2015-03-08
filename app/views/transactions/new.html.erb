@@ -20,6 +20,13 @@
      <label> OTP password </label>
      <input type="text" value="" name="otp">
    </div>
+   <p class="large text-muted">
+    The OTP is sent to the destination account selected in the "to account" field via twilio.
+    trial version of twilio accepts only few verified phone numbers.
+    <br>
+    for testing the otp is displyed below
+    <span class="large text-muted display_otp red"></span>
+   </p>
 
    <input type="submit" class="submit_transaction" value="transfer" disabled >
 </form>
@@ -43,6 +50,7 @@
                          if(data["msg_sent"]=="success"){
                             $(".show_otp").removeAttr("style");
                             $(".submit_transaction").removeAttr("disabled");
+                            $(".display_otp").html(data["otp"]);
                          }
                          else{
                            $(".error").html("PLease try again");
