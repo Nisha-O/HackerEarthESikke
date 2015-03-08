@@ -1,7 +1,5 @@
-<div class="error">
-<%= flash[:transaction_error]  %>
-</div>
- <form method="post"   action="/transactions">
+
+ <form method="post"   action="/transactions" style="margin-top: 100px;">
     <div class="field">
       <label> From Account </label>
       <%= @user.account_id %>
@@ -25,6 +23,9 @@
 
    <input type="submit" class="submit_transaction" value="transfer" disabled >
 </form>
+<div class="error">
+<%= flash[:transaction_error]  %>
+</div>
 
 <button class="generate_otp">Initiate Transaction</button>
 
