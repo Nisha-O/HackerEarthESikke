@@ -1,0 +1,55 @@
+<div id="signupbox" style=" margin-top:50px" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+  <% if flash[:signup_error] %>
+  <div class="alert alert-danger">
+  <%= flash[:signup_error] %>
+  </div>
+  <% end %>
+                    <div class="panel panel-info" style='margin-top:30px'>
+                        <div class="panel-heading">
+                            <div class="panel-title">Sign Up</div>
+                        </div>  
+                        <div class="panel-body" >
+                           <%= form_for @user, :url=>"/users", :method=>:post  do |user_form| %>
+                          
+                                <div class="form-group">
+                                    <label for="email" class="col-md-3 control-label">Email</label>
+                                    <div class="col-md-9">
+                                        <%= user_form.email_field :email ,:class=>"form-control",:placeholder=>"Email Address"%>
+                                    </div>
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <label for="firstname" class="col-md-3 control-label">Name</label>
+                                    <div class="col-md-9">
+                                        <%= user_form.text_field :name ,:class=>"form-control",:placeholder=>"Name"%>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="firstname" class="col-md-3 control-label">Mobile Number</label>
+                                    <div class="col-md-9">
+                                        <%= user_form.text_field :mobile ,:class=>"form-control",:placeholder=>"Mobile Number"%>
+                                    </div>
+                                </div>
+                               <div class="form-group">
+                                    <label for="password" class="col-md-3 control-label">Password</label>
+                                    <div class="col-md-9">
+                                        <%= user_form.password_field :password,:class=>"form-control",:placeholder=>"Password" %>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password" class="col-md-3 control-label">Password Confirmation</label>
+                                    <div class="col-md-9">
+                                        <%= user_form.password_field :password_confirmation,:class=>"form-control",:placeholder=>"Password" %>
+                                    </div>
+                                </div>
+                                    
+                                <div class="form-group">
+                                    <!-- Button -->                                        
+                                    <div class="col-md-offset-3 col-md-9">
+                                      <%= user_form.submit :class=>"btn btn-success", :value=>"login" %>
+                                    </div>
+                                </div>
+                               <%end%> 
+                         </div>
+                    </div>
+                  </div>

@@ -1,0 +1,44 @@
+<style>
+.qr {
+border-width: 0;
+border-style: none;
+border-color: #0000ff;
+border-collapse: collapse;
+width: auto;
+    margin-top: 100px;
+}
+.qr td {
+border-width: 0;
+border-style: none;
+border-color: #0000ff;
+border-collapse: collapse;
+padding: 0;
+margin: 0;
+width: 3px;
+height: 3px;
+}
+.qr td.black { background-color: #000; }
+.qr td.white { background-color: #fff; }
+</style>
+
+<center>
+<table class="qr">
+  <% @qr.modules.each_index do |x| %>
+      <tr>
+        <% @qr.modules.each_index do |y| %>
+            <% if @qr.dark?(x,y) %>
+                <td class="black"/>
+            <% else %>
+                <td class="white"/>
+            <% end %>
+        <% end %>
+      </tr>
+  <% end %>
+</table>
+  <form method="post" action="/activate_user">
+    <label>Code given by the scanner: </label>
+    <input type="text" name="code">
+    <input type="hidden" name="user_id" value="<%= @user.id %>">
+    <input type="submit" value="activate">
+  </form>
+</center>

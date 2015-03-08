@@ -1,0 +1,59 @@
+<div class="error">
+<%= flash[:transaction_error]  %>
+</div>
+ <form method="post"   action="/transactions">
+    <div class="field">
+      <label> From Account </label>
+      <%= @user.account_id %>
+    </div>
+    <div class="field">
+      <label> To Account </label>
+      <%= select_tag(:to_account, options_for_select(@to_accounts), {:prompt=> "Select the account to transfer the amount", :required=>true } )  %>
+    </div>
+    <div class="field">
+      <label> Amount </label>
+      <input type="text" value="" name="amount">
+    </div>
+   <div class="field">
+     <label> Amount </label>
+     <input type="hidden" value="<%= @user.id %>" name="user_id">
+   </div>
+   <div class="field show_otp"  style="display: none">
+     <label> OTP password </label>
+     <input type="text" value="" name="otp">
+   </div>
+
+   <input type="submit" class="submit_transaction" value="transfer" disabled >
+</form>
+
+<button class="generate_otp">Initiate Transaction</button>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+         $(".generate_otp").on("click", function(){
+             $(this).attr("disabled","true");
+             if($("#to_account").val())
+             {
+                 $.ajax({
+                     type: "GET",
+                     url: "/generate_otp",
+                     data: {account_id: $("#to_account").val()},
+                     success: function(data){
+                         if(data["msg_sent"]=="success"){
+                            $(".show_otp").removeAttr("style");
+                            $(".submit_transaction").removeAttr("disabled");
+                         }
+                         else{
+                           $(".error").html("PLease try again");
+                           $(".generate_otp").removeAttr("disabled");
+                         }
+                     }
+
+                 })
+             }
+         })
+
+    });
+
+
+</script>
