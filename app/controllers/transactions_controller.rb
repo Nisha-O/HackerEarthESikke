@@ -53,12 +53,11 @@ class TransactionsController  < ApplicationController
   end
 
   def show
-    @user =  User.activated_user(11).first
+    id = params[:id] || current_user.id
+    @user =  User.activated_user(id).first
     @credited_transactions = @user.transactions.credited_transactions(@user.id)
     @debited_transactions = @user.transactions.debited_transactions(@user.id)
-    puts @credited_transactions.inspect
-    puts @debited_transactions.inspect
-    puts "aaa"
+    
   end
 
   def index

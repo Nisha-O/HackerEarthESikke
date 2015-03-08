@@ -10,7 +10,7 @@ Esikka::Application.routes.draw do
   get "/login", to: "login#login"
 
   resources :users
-
+  get "/transactions/:id", to: "transactions#show"
   resource :transactions
   get "/generate_otp", to: "transactions#generate_otp"
 
