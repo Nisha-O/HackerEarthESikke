@@ -53,10 +53,14 @@ class TransactionsController  < ApplicationController
   end
 
   def show
-    id = params[:id] || current_user.id
-    @user =  User.activated_user(id).first
-    @credited_transactions = @user.transactions.credited_transactions(@user.id)
-    @debited_transactions = @user.transactions.debited_transactions(@user.id)
+    id = current_user.present? ? current_user.id : params[:id]  
+    if id.present?
+      @user =  User.activated_user(id).first
+      @credited_transactions = @user.transactions.credited_transactions(@user.id)
+      @debited_transactions = @user.transactions.debited_transactions(@user.id)
+    else
+      redirect_to "/login"
+    end  
     
   end
 
