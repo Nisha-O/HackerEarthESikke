@@ -35,10 +35,20 @@ height: 3px;
       </tr>
   <% end %>
 </table>
+
   <form method="post" action="/activate_user">
-    <label>Code given by the scanner: </label>
+    <label>Authentication Code</label>
     <input type="text" name="code">
     <input type="hidden" name="user_id" value="<%= @user.id %>">
     <input type="submit" value="activate">
   </form>
+
+  <div>
+    <div class="timeline-heading">
+      <p class="text-muted">Use Google Authenticator Application on your phone to scan the above barcode.</p>
+
+
+    </div>
+  </div>
+
 </center>
