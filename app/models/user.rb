@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :account_id, :email, :mobile, :password, :password_confirmation,:name,:mobile, :is_activated
+  attr_accessible :account_id, :email, :mobile, :password, :password_confirmation,:name,:mobile, :is_activated, :wallet_amount
   validates :email, uniqueness: true
   validates :account_id, uniqueness: true
   validates_presence_of :mobile
