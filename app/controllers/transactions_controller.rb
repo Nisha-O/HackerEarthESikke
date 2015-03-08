@@ -1,9 +1,10 @@
 class TransactionsController  < ApplicationController
 
   def new
-   if current_user
+   @current_user = User.find_by_id(session[:user_id])
+   if @current_user.present?
    @transaction = Transaction.new
-   @user = current_user
+   @user = @current_user
    @to_accounts = User.find_all_by_is_activated(1).collect{ |u| [u.id, u.account_id]}
    else
      redirect_to "/login"
@@ -53,9 +54,9 @@ class TransactionsController  < ApplicationController
   end
 
   def show
-    id = current_user.present? ? current_user.id : params[:id]  
-    if id.present?
-      @user =  User.activated_user(id).first
+    @current_user = User.find_by_id(session[:user_id])
+    if @current_user.present?
+      @user =  User.activated_user(@current_user.id).first
       @credited_transactions = @user.transactions.credited_transactions(@user.id)
       @debited_transactions = @user.transactions.debited_transactions(@user.id)
     else

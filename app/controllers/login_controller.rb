@@ -34,7 +34,8 @@ class LoginController < ApplicationController
     puts code_validate.to_s
     if pwd_validate and code_validate
       session[:user_id] = user.id
-      redirect_to "/transactions/new"
+      @current_user ||= User.find(session[:user_id])
+      redirect_to "/"
     else
       flash[:error] = "Authentication failed"
       redirect_to "/login"
