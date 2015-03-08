@@ -12,15 +12,18 @@ class TransactionsController  < ApplicationController
   end
 
   def create
-    @from_user = User.find_by_id(params[:user_id])
-    @to_user = User.find_by_account_id(params[:to_account])
+    @from_user = User.activated_user(params[:user_id]).first
+    @target_user = User.find_by_account_id(params[:to_account])
     transaction_id = SecureRandom.hex(6)
-    otp_valid = @to_user.authenticate_otp("#{params[:otp]}", :drift=> 3000)
-     puts "aaa"+@to_user.account_id.to_s
+    otp_valid = @target_user.authenticate_otp("#{params[:otp]}", :drift=> 3000)
+     puts "aaa"+@target_user.account_id.to_s
     puts  @from_user.wallet_amount > params[:amount].to_i
     if otp_valid and @from_user.wallet_amount.to_i > params[:amount].to_i
-      Transaction.create(:account_id=>@from_user.account_id,:user_id=>@from_user.id, :transaction_id=>transaction_id,:amount=>params[:amount].to_i, :type=>"debit",:status=>"initiated")
-      Transaction.create(:account_id=>@to_user.account_id,:user_id=>@to_user.id, :transaction_id=>transaction_id,:amount=>params[:amount].to_i, :type=>"credit", :status=>"initiated")
+      transact1 = Transaction.create(:account_id=>@from_user.account_id,:user_id=>@from_user.id, :transaction_id=>transaction_id,:amount=>params[:amount].to_i, :transaction_type=>"debit",:status=>"initiated")
+      transact2 = Transaction.create(:account_id=>@target_user.account_id,:user_id=>@target_user.id, :transaction_id=>transaction_id,:amount=>params[:amount].to_i, :transaction_type=>"credit",:status=>"initiated")
+
+      flash[:transaction_success] = "Transaction Successful!"
+      redirect_to "/"
     else
       flash[:transaction_error] = "Transaction Failed"
       redirect_to "/transactions/new"
@@ -50,7 +53,12 @@ class TransactionsController  < ApplicationController
   end
 
   def show
-
+    @user =  User.activated_user(11).first
+    @credited_transactions = @user.transactions.credited_transactions(@user.id)
+    @debited_transactions = @user.transactions.debited_transactions(@user.id)
+    puts @credited_transactions.inspect
+    puts @debited_transactions.inspect
+    puts "aaa"
   end
 
   def index

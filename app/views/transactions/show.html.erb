@@ -1,0 +1,8 @@
+
+<div class="container"    style="margin-top: 80px;" >
+  <%= render :partial=> "transactions_table", :locals=>{ :transactions=> @credited_transactions, :t_type=>"Credits"} %>
+
+  <br>
+  <%= render :partial=> "transactions_table", :locals=>{ :transactions=> @debited_transactions, :t_type=>"Debits"} %>
+
+</div>

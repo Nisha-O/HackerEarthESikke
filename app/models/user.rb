@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   has_secure_password
   has_one_time_password
 
-  scope :activated_user, lambda{|id| where(:is_activated=>1,:id=>id) }
+  scope :activated_user, lambda{|id| where(:is_activated=>1,:id=>id).limit(1) }
 
 
 end
