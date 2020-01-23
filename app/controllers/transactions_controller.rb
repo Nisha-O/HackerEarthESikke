@@ -41,8 +41,8 @@ class TransactionsController  < ApplicationController
 
   def send_msg(mobile,otp)
     #begin
-      account_sid = 'AC8f744a55287db6e30e33f8d6afa15f7d'
-      auth_token = '04c44f660caed245e1755a7cdbe98add'
+      account_sid = 'accid'
+      auth_token = 'token'
       @client = Twilio::REST::Client.new account_sid, auth_token
       puts "aaa"+mobile.to_s
       sent = @client.account.messages.create({ :from => '+19287560182', :to=> "+91#{mobile}", :body=>"Your OTP is #{otp}" })
